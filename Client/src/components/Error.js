@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import "./Error.css";
 const Error = ({ code }) => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const Error = ({ code }) => {
       p: "",
     },
   };
-  const btn = null;
+  let btn = null;
   if (code === 404)
     btn = (
       <button className="btn btn-primary" onClick={() => navigate("/")}>
