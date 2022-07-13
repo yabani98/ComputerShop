@@ -61,6 +61,9 @@ const App = () => {
                 </td>
                 <td>{"$" + cart[i.name].price}</td>
                 <td>
+                  <button className="btn btn-outline-primary" style={{'margin':'10px'}}>
+                    <a href={"https://www.amazon.com/s?k="+cart[i.name].name}>Buy</a>
+                  </button>
                   <button
                     className="btn btn-outline-danger"
                     onClick={() => removeFromCart(i.name)}
