@@ -24,10 +24,11 @@ const Category = () => {
         return Promise.all([res[0].json(), res[1].json()]);
       })
       .then((res) => {
+        res[1].components = res[1].components.filter((i) => i.category._id === id);
         const strArr = [];
         res[1].components.forEach((component) => {
           let str = "";
-          splitArray(component.image.data.data, 10000).forEach((i) => {
+          splitArray(component.image.data.data).forEach((i) => {
             str += String.fromCharCode(...i);
           });
           strArr.push(
@@ -36,7 +37,7 @@ const Category = () => {
         });
         setImageStrings(strArr);
         setCategory(res[0].category);
-        setComponents(res[1].components.filter((i) => i.category._id === id));
+        setComponents(res[1].components);
       })
       .catch(()=>setStatus('NetworkError'));
   }, []);
