@@ -4,6 +4,7 @@ import { CartContext } from "./CartContext";
 import Loading from "./Loading";
 import Error from "./Error";
 import "./Category.css";
+import splitArray from "./helpers/splitArray";
 const Category = () => {
   const { id } = useParams();
   const [category, setCategory] = useState(undefined);
@@ -12,14 +13,7 @@ const Category = () => {
   const [imageStrings, setImageStrings] = useState([]);
   const { addToCart } = useContext(CartContext);
   const navigate = useNavigate();
-  const splitArray = (arr, size) => {
-    let resArr = [];
-    for (let i = 0; i < arr.length; i += size) {
-      let x = arr.slice(i, i + size);
-      resArr.push(x);
-    }
-    return resArr;
-  };
+
   useEffect(() => {
     Promise.all([
       fetch(process.env.REACT_APP_API_URL + "/category/" + id),
@@ -44,7 +38,7 @@ const Category = () => {
         setCategory(res[0].category);
         setComponents(res[1].components.filter((i) => i.category._id === id));
       })
-      .catch(err=>setStatus('NetworkError'));
+      .catch(()=>setStatus('NetworkError'));
   }, []);
 
   if (status !== 200) return <Error code={status} />;

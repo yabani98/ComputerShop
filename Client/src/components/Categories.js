@@ -14,7 +14,7 @@ const Categories = () => {
         return res.json();
       })
       .then((res) => setCategories(res.categories))
-      .catch(err=>setStatus('NetworkError'));
+      .catch(()=>setStatus('NetworkError'));
   }, []);
   if (status !== 200) return <Error code={status} />;
   if (!categories) return <Loading />;

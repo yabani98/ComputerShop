@@ -52,7 +52,7 @@ const UpdateCategory = () => {
       .then((res) => {
         setCategory(res.category);
       })
-      .catch(err=>setStatus('NetworkError'));
+      .catch(()=>setStatus('NetworkError'));
   }, []);
   if (status !== 200) return <Error code={status} />;
   if (!category) return <Loading />;

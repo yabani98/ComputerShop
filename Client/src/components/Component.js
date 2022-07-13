@@ -4,6 +4,7 @@ import { CartContext } from "./CartContext";
 import Loading from "./Loading";
 import Error from "./Error";
 import "./Component.css";
+import splitArray from "./helpers/splitArray";
 
 const Component = () => {
   const { addToCart } = useContext(CartContext);
@@ -11,14 +12,7 @@ const Component = () => {
   const [imageString, setImageString] = useState("");
   const [status, setStatus] = useState(200);
   const { id } = useParams();
-  const splitArray = (arr, size) => {
-    let resArr = [];
-    for (let i = 0; i < arr.length; i += size) {
-      let x = arr.slice(i, i + size);
-      resArr.push(x);
-    }
-    return resArr;
-  };
+
   useEffect(() => {
     fetch(process.env.REACT_APP_API_URL + "/component/" + id)
       .then((res) => {
@@ -27,7 +21,7 @@ const Component = () => {
       })
       .then((res) => {
         let str = "";
-        splitArray(res.component.image.data.data, 10000).forEach((i) => {
+        splitArray(res.component.image.data.data).forEach((i) => {
           str += String.fromCharCode(...i);
         });
 
@@ -36,7 +30,7 @@ const Component = () => {
           "data:" + res.component.image.contentType + ";base64," + btoa(str)
         );
       })
-      .catch(err=>setStatus('NetworkError'));
+      .catch(()=>setStatus('NetworkError'));
   }, []);
   if (status !== 200) return <Error code={status} />;
   if (!component) return <Loading />;

@@ -43,7 +43,7 @@ const DeleteCategory = () => {
         setCategory(res[0].category);
         setComponents(res[1].components.filter((i) => i.category._id === id));
       })
-      .catch(err=>setStatus('NetworkError'));
+      .catch(()=>setStatus('NetworkError'));
   }, []);
   if (status !== 200) return <Error code={status} />;
   if (!category || !components) return <Loading />;

@@ -2,16 +2,26 @@ import React, { useState, useEffect, useContext } from "react";
 import { CartContext } from "./CartContext";
 import Loading from "./Loading";
 import Error from "./Error";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import splitArray from "./helpers/splitArray";
 
 const App = () => {
   const { cart, removeFromCart, emptyCart } = useContext(CartContext);
   const [categories, setCategories] = useState(undefined);
   const [status, setStatus] = useState(200);
   const navigate = useNavigate();
-  
+
   let total = 0;
-  Object.entries(cart).forEach(([, i]) => (total += i.price));
+  let imageStrings = {};
+  Object.entries(cart).forEach(([categoryName, component]) => {
+    let str = "";
+    total += component.price;
+    splitArray(component.image.data.data).forEach((i) => {
+      str += String.fromCharCode(...i);
+    });
+    imageStrings[categoryName] =
+      "data:" + component.image.contentType + ";base64," + btoa(str);
+  });
   useEffect(() => {
     fetch(process.env.REACT_APP_API_URL + "/category/all")
       .then((res) => {
@@ -19,7 +29,7 @@ const App = () => {
         return res.json();
       })
       .then((res) => setCategories(res.categories))
-      .catch(err=>setStatus('NetworkError'));
+      .catch(() => setStatus("NetworkError"));
   }, []);
   if (status !== 200) return <Error code={status} />;
   if (!categories) return <Loading />;
@@ -39,7 +49,16 @@ const App = () => {
             return cart[i.name] ? (
               <tr key={id}>
                 <th scope="row">{i.name}</th>
-                <td>{cart[i.name].name}</td>
+                <td>
+                  <img
+                    src={imageStrings[i.name]}
+                    alt={cart[i.name].name}
+                    style={{ width: "40px", height: "40px" }}
+                  />
+                  <Link to={"/component/" + i._id}>
+                    {" " + cart[i.name].name}
+                  </Link>
+                </td>
                 <td>{"$" + cart[i.name].price}</td>
                 <td>
                   <button

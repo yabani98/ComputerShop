@@ -34,7 +34,7 @@ const DeleteComponent = () => {
         return res.json();
       })
       .then((res) => setComponent(res.component))
-      .catch(err=>setStatus('NetworkError'));
+      .catch(()=>setStatus('NetworkError'));
   }, []);
   if (status !== 200) return <Error code={status}/>;
   if (!component) return <Loading />;

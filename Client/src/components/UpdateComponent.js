@@ -78,7 +78,7 @@ const UpdateComponent = () => {
         setCategories(res[1].categories);
         setCategoryName(res[0].component.category.name);
       })
-      .catch(err=>setStatus('NetworkError'));
+      .catch(()=>setStatus('NetworkError'));
   }, []);
   if (status !== 200) return <Error code={status} />;
   if (!component || !categories) return <Loading />;
