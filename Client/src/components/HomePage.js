@@ -4,6 +4,7 @@ import Loading from "./Loading";
 import Error from "./Error";
 import { useNavigate, Link } from "react-router-dom";
 import splitArray from "./helpers/splitArray";
+import './HomePage.css'
 
 const App = () => {
   const { cart, removeFromCart, emptyCart } = useContext(CartContext);
@@ -61,15 +62,21 @@ const App = () => {
                 </td>
                 <td>{"$" + cart[i.name].price}</td>
                 <td>
-                  <button className="btn btn-outline-primary" style={{'margin':'10px'}}>
-                    <a href={"https://www.amazon.com/s?k="+cart[i.name].name}>Buy</a>
-                  </button>
-                  <button
-                    className="btn btn-outline-danger"
-                    onClick={() => removeFromCart(i.name)}
-                  >
-                    Remove
-                  </button>
+                  <div className="btns">
+                    <button className="btn btn-outline-primary">
+                      <a
+                        href={"https://www.amazon.com/s?k=" + cart[i.name].name}
+                      >
+                        Buy
+                      </a>
+                    </button>
+                    <button
+                      className="btn btn-outline-danger"
+                      onClick={() => removeFromCart(i.name)}
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </td>
               </tr>
             ) : (
@@ -89,9 +96,6 @@ const App = () => {
         </tbody>
       </table>
       <p>{"Total: $" + total}</p>
-      <button className="btn btn-primary" onClick={() => emptyCart()}>
-        Checkout
-      </button>
     </div>
   );
 };
