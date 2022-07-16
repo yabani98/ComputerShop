@@ -57,10 +57,8 @@ describe.skip("HomePage", () => {
 
     let table = screen.findByRole("table");
     let choose = await screen.findAllByText(/Choose/i);
-    let checkout = screen.queryAllByRole("button",{name:'Checkout'});
     expect(table).toBeDefined();
     expect(choose.length).toEqual(4);
-    expect(checkout.length).toEqual(1);
   });
   test("pressing on Choose renders the category", async () => {
     fetch.mockResponse(JSON.stringify({ categories }));
@@ -94,21 +92,5 @@ describe.skip("HomePage", () => {
     const user = userEvent.setup();
     await user.click(screen.getAllByRole("button", { name: "Remove" })[0]);
     expect(removeFromCart).toHaveBeenCalledTimes(1);
-  });
-  test("pressing on Checkout empties the cart", async () => {
-    fetch.mockResponse(JSON.stringify({ categories }));
-    await act(() => {
-      render(
-        <BrowserRouter>
-          <CartContext.Provider value={{ cart, removeFromCart, emptyCart }}>
-            <HomePage />
-          </CartContext.Provider>
-        </BrowserRouter>
-      );
-    });
-    const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Checkout" }));
-
-    expect(emptyCart).toHaveBeenCalledTimes(1);
   });
 });

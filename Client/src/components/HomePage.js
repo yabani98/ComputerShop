@@ -66,6 +66,7 @@ const App = () => {
                     <button className="btn btn-outline-primary">
                       <a
                         href={"https://www.amazon.com/s?k=" + cart[i.name].name}
+                        target="_blank"
                       >
                         Buy
                       </a>
