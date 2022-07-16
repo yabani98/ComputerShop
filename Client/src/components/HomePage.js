@@ -38,16 +38,18 @@ const App = () => {
   useEffect(() => {
     (async () => {
       try {
-        await Promise.all(
-          cookies.components?.map(async (i) => {
-            const res = await fetch(
-              process.env.REACT_APP_API_URL + "/component/" + i
-            );
-            setStatus(Math.max(status, res.status));
-            const res_component = await res.json();
-            addToCart(res_component.component);
-          })
-        );
+        if (cookies.components) {
+          await Promise.all(
+            cookies.components.map(async (i) => {
+              const res = await fetch(
+                process.env.REACT_APP_API_URL + "/component/" + i
+              );
+              setStatus(Math.max(status, res.status));
+              const res_component = await res.json();
+              addToCart(res_component.component);
+            })
+          );
+        }
       } catch (err) {
         setStatus("NetworkError");
       }
