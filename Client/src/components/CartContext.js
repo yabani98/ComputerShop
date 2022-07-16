@@ -6,6 +6,7 @@ const CartProvider = ({ children }) => {
   const addToCart = (component) => {
     let obj = {};
     obj[component.category.name] = component;
+
     setCart({ ...cart, ...obj });
   };
 

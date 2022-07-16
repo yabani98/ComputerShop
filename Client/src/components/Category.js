@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { CartContext } from "./CartContext";
+import { useCookies } from "react-cookie";
 import Loading from "./Loading";
 import Error from "./Error";
 import "./Category.css";
@@ -12,6 +13,7 @@ const Category = () => {
   const [status, setStatus] = useState(200);
   const [imageStrings, setImageStrings] = useState([]);
   const { addToCart } = useContext(CartContext);
+  const [cookies, setCookies] = useCookies(["components"]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,7 +26,9 @@ const Category = () => {
         return Promise.all([res[0].json(), res[1].json()]);
       })
       .then((res) => {
-        res[1].components = res[1].components.filter((i) => i.category._id === id);
+        res[1].components = res[1].components.filter(
+          (i) => i.category._id === id
+        );
         const strArr = [];
         res[1].components.forEach((component) => {
           let str = "";
@@ -39,7 +43,7 @@ const Category = () => {
         setCategory(res[0].category);
         setComponents(res[1].components);
       })
-      .catch(()=>setStatus('NetworkError'));
+      .catch(() => setStatus("NetworkError"));
   }, []);
 
   if (status !== 200) return <Error code={status} />;
@@ -88,6 +92,18 @@ const Category = () => {
                     className="btn btn-outline-primary"
                     onClick={() => {
                       addToCart(i);
+                      if (
+                        cookies.components &&
+                        cookies.components.indexOf(i) === -1
+                      )
+                        setCookies(
+                          "components",
+                          [
+                            ...(cookies.components ? cookies.components : []),
+                            i._id,
+                          ],
+                          { SameSite: false }
+                        );
                       navigate("/");
                     }}
                     disabled={i.stock <= 0}

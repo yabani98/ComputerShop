@@ -1,19 +1,22 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useCookies } from "react-cookie";
 import { CartContext } from "./CartContext";
 import Loading from "./Loading";
 import Error from "./Error";
 import { useNavigate, Link } from "react-router-dom";
 import splitArray from "./helpers/splitArray";
-import './HomePage.css'
+import "./HomePage.css";
 
 const App = () => {
-  const { cart, removeFromCart, emptyCart } = useContext(CartContext);
+  const { cart, addToCart, removeFromCart } = useContext(CartContext);
   const [categories, setCategories] = useState(undefined);
   const [status, setStatus] = useState(200);
+  const [cookies] = useCookies(["components"]);
   const navigate = useNavigate();
 
   let total = 0;
   let imageStrings = {};
+
   Object.entries(cart).forEach(([categoryName, component]) => {
     let str = "";
     total += component.price;
@@ -31,6 +34,24 @@ const App = () => {
       })
       .then((res) => setCategories(res.categories))
       .catch(() => setStatus("NetworkError"));
+  }, []);
+  useEffect(() => {
+    (async () => {
+      try {
+        await Promise.all(
+          cookies.components?.map(async (i) => {
+            const res = await fetch(
+              process.env.REACT_APP_API_URL + "/component/" + i
+            );
+            setStatus(Math.max(status, res.status));
+            const res_component = await res.json();
+            addToCart(res_component.component);
+          })
+        );
+      } catch (err) {
+        setStatus("NetworkError");
+      }
+    })();
   }, []);
   if (status !== 200) return <Error code={status} />;
   if (!categories) return <Loading />;

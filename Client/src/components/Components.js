@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { CartContext } from "./CartContext";
 import { Link, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import Loading from "./Loading";
 import Error from "./Error";
 import splitArray from "./helpers/splitArray";
@@ -8,6 +9,7 @@ const Components = () => {
   const [components, setComponents] = useState(undefined);
   const [imageStrings, setImageStrings] = useState([]);
   const [status, setStatus] = useState(200);
+  const [cookies, setCookies] = useCookies(["components"]);
   const { addToCart } = useContext(CartContext);
   const navigate = useNavigate();
   
@@ -69,6 +71,12 @@ const Components = () => {
                     className="btn btn-outline-primary"
                     onClick={() => {
                       addToCart(i);
+                      if (cookies.components && cookies.components.indexOf(i) === -1)
+                      setCookies(
+                        "components",
+                        [...(cookies.components ? cookies.components : []), i._id],
+                        { SameSite: false }
+                      );
                       navigate("/");
                     }}
                   >

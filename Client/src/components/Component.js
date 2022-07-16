@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useCookies } from "react-cookie";
 import { useParams, Link } from "react-router-dom";
 import { CartContext } from "./CartContext";
 import Loading from "./Loading";
@@ -11,6 +12,7 @@ const Component = () => {
   const [component, setComponent] = useState(undefined);
   const [imageString, setImageString] = useState("");
   const [status, setStatus] = useState(200);
+  const [cookies, setCookies] = useCookies(["components"]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -30,7 +32,7 @@ const Component = () => {
           "data:" + res.component.image.contentType + ";base64," + btoa(str)
         );
       })
-      .catch(()=>setStatus('NetworkError'));
+      .catch(() => setStatus("NetworkError"));
   }, []);
   if (status !== 200) return <Error code={status} />;
   if (!component) return <Loading />;
@@ -50,7 +52,15 @@ const Component = () => {
         <img src={imageString} alt={component.name} />
         <button
           className="btn btn-primary"
-          onClick={() => addToCart(component)}
+          onClick={() => {
+            addToCart(component);
+            if (cookies.components && cookies.components.indexOf(i) === -1)
+              setCookies(
+                "components",
+                [...(cookies.components ? cookies.components : []), i._id],
+                { SameSite: false }
+              );
+          }}
         >
           Add
         </button>

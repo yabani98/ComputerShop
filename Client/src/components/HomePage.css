@@ -1,9 +1,7 @@
-a{
-    text-decoration: none;
-
+a {
+  text-decoration: none;
 }
-.btns{
-display: flex;
-gap: 10px;
-
+.btns {
+  display: flex;
+  gap: 10px;
 }
