@@ -13,7 +13,7 @@ const Error = ({ code }) => {
       p: "We're unable to find out what's happening! We suggest you to Go Back or visit here later.",
     },
     NetworkError: {
-      h2: "Server is Down",
+      h2: "",
       p: "",
     },
   };
