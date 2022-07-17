@@ -89,7 +89,7 @@ const Component = () => {
           </div>
         </div>
         <div className="div2">
-          <div>features</div>
+          <div>Features</div>
           <ul className="list-group list-group-flush">
             {component.features.split(",").map((i, id) => {
               return (

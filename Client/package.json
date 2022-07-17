@@ -2,6 +2,10 @@
   "name": "inventory-app",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "npm": "8.3.0",
+    "node": "14.19.3"
+  },
   "dependencies": {
     "bootstrap-icons": "^1.8.2",
     "react": "^18.1.0",

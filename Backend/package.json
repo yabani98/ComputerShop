@@ -30,5 +30,15 @@
     "mocha": "^10.0.0",
     "mongodb-memory-server": "^8.6.0",
     "supertest": "^6.2.3"
-  }
+  },
+  "engines": {
+    "node": "14.19.3"
+  },
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "author": "Abdullah",
+  "license": "ISC",
+  "description": ""
 }
