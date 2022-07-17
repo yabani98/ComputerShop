@@ -30,3 +30,9 @@ height: 180px;
     flex-direction: column;
     gap: 10px;
 }
+.div1{
+    flex: 1;
+}
+.div2{
+    flex:3;
+}

@@ -11,7 +11,7 @@ const mockedUseNavigate = jest.fn((url)=>{calledUrl = url;});
       ...jest.requireActual("react-router-dom"),
       useNavigate:()=> mockedUseNavigate,
     }));
-describe.skip("HomePage", () => {
+describe("HomePage", () => {
   beforeEach(() => {
     fetch.resetMocks();
     categories = [

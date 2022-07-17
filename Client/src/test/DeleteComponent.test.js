@@ -14,7 +14,7 @@ jest.mock("react-router-dom", () => ({
     id: 0,
   }),
 }));
-describe.skip("DeleteComponent", () => {
+describe("DeleteComponent", () => {
   beforeEach(() => {
     mockedUseNavigate = jest.fn((url) => {
       calledUrl = url;

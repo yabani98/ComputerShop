@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { act } from "react-dom/test-utils";
 
 let categories;
-describe.skip("Categories", () => {
+describe("Categories", () => {
   beforeEach(() => {
     fetch.resetMocks();
     categories = [

@@ -15,7 +15,7 @@ jest.mock("react-router-dom", () => ({
     id: 0,
   }),
 }));
-describe.skip('UpdateComponent',()=>{
+describe('UpdateComponent',()=>{
 beforeEach(()=>{
      mockedUseNavigate = jest.fn((url) => {
         calledUrl = url;

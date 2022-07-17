@@ -11,7 +11,7 @@ jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useNavigate: () => mockedUseNavigate,
 }));
-describe.skip('Create Category',()=>{
+describe('Create Category',()=>{
 beforeEach(()=>{
     fetch.resetMocks();
     category = {_id:0,name:'fake',description:'fakedesc'};

@@ -16,7 +16,7 @@ jest.mock("react-router-dom", () => ({
   }),
 }));
 
-describe.skip("UpdateCategory", () => {
+describe("UpdateCategory", () => {
   beforeEach(() => {
     fetch.resetMocks();
     category = { _id: 0, name: "fake", description: "fakedesc" };

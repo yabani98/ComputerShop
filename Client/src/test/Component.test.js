@@ -11,7 +11,7 @@ jest.mock("react-router-dom", () => ({
   }),
 }));
 let component, addToCart;
-describe.skip("Component", () => {
+describe("Component", () => {
   beforeEach(() => {
     fetch.resetMocks();
     

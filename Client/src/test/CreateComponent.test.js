@@ -13,7 +13,7 @@ jest.mock("react-router-dom", () => ({
   useNavigate: () => mockedUseNavigate,
 }));
 
-describe.skip("CreateComponent", () => {
+describe("CreateComponent", () => {
   beforeEach(() => {
     fetch.resetMocks();
     component = {

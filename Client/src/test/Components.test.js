@@ -12,7 +12,7 @@ const mockedUseNavigate = jest.fn((url)=>{calledUrl = url;});
       useNavigate:()=> mockedUseNavigate,
     }));
 
-describe.skip("Components", () => {
+describe("Components", () => {
   beforeEach(() => {
     fetch.resetMocks();
     components = [

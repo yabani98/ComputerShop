@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useCookies } from "react-cookie";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { CartContext } from "./CartContext";
 import Loading from "./Loading";
 import Error from "./Error";
@@ -14,6 +14,7 @@ const Component = () => {
   const [status, setStatus] = useState(200);
   const [cookies, setCookies] = useCookies(["components"]);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(process.env.REACT_APP_API_URL + "/component/" + id)
@@ -40,7 +41,7 @@ const Component = () => {
   return (
     <div className="component-container">
       <div className="sub-1">
-        <h3>{component.name}</h3>
+        <h3 className="text-center">{component.name}</h3>
         <div className="mod">
           <Link className="btn btn-link" to={"/component/update/" + id}>
             Update
@@ -60,6 +61,7 @@ const Component = () => {
                 [...(cookies.components ? cookies.components : []), i._id],
                 { SameSite: false }
               );
+            navigate("/");
           }}
         >
           Add
